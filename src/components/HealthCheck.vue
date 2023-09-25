@@ -23,7 +23,7 @@ export default {
       if (!this.isConnected && !firstConnection) {
         return;
       }
-      fetch("http://td5ecu.local:5000/api/_health")
+      fetch(`${import.meta.env.VITE_API_URL}/api/_health`)
         .then(response => {
           if (firstConnection) {
             if (response.status === 200) {

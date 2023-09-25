@@ -19,7 +19,7 @@ export default {
         return
       }
 
-      fetch('http://td5ecu.local:5000')
+      fetch(`${import.meta.env.VITE_API_URL}/api/data`)
         .then(response => response.json())
         .then(data => this.payload = data)
     },

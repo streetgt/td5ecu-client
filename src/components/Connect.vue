@@ -29,7 +29,7 @@ export default {
         },
         clearFaults() {
             this.faultsStore.clearFaults()
-            toast.error("Faults have been deleted!");
+            toast.success("Fault(s) cleared!");
         }
     },
     computed: {

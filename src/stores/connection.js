@@ -10,12 +10,12 @@ export const useConnectionStore = defineStore({
   },
   actions: {
     async startConnection() {
-      return fetch("http://td5ecu.local:5000/api/start", { method: "POST" }).then(() => {
+      return fetch(`${import.meta.env.VITE_API_URL}/api/start`, { method: "POST" }).then(() => {
         setTimeout(() => this.connected = true, 3000);
       });
     },
     async stopConnection() {
-      fetch("http://td5ecu.local:5000/api/stop", { method: "POST" }).then(() => this.connected = false);
+      fetch(`${import.meta.env.VITE_API_URL}/api/stop`, { method: "POST" }).then(() => this.connected = false);
     },
     setConnectionStatus(status) {
       this.connected = status

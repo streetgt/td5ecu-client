@@ -11,7 +11,7 @@ export const useFaultsStore = defineStore({
   },
   actions: {
     fetchFaults() {
-      fetch('http://td5ecu.local:5000/api/faults/read', { method: "POST" })
+      fetch(`${import.meta.env.VITE_API_URL}/api/faults/read`, { method: "POST" })
         .then(response => response.json())
         .then((data) => {
           this.faults = data.map((code) => {
@@ -23,7 +23,7 @@ export const useFaultsStore = defineStore({
         })
     },
     clearFaults() {
-      fetch('http://td5ecu.local:5000/api/faults/clear', { method: "POST" }).then(() => {
+      fetch(`${import.meta.env.VITE_API_URL}/api/faults/clear`, { method: "POST" }).then(() => {
         this.faults = {}
       })
     }
