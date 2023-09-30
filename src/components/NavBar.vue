@@ -2,10 +2,6 @@
 const routes = [
     {
         to: "/",
-        name: "connect",
-    },
-    {
-        to: "/dashboard",
         name: "dashboard",
     },
     {
@@ -23,14 +19,18 @@ const routes = [
     {
         to: "/engine",
         name: "engine",
-    }
+    },
+    {
+        to: "/faults",
+        name: "Faults",
+    },
 ]
 </script>
 
 <template>
     <div>
-        <b-navbar toggleable="lg" type="dark" variant="info">
-            <b-navbar-brand href="#">
+        <b-navbar toggleable="lg" type="dark" variant="dark">
+            <b-navbar-brand href="/">
                 <img src="@/assets/td5.png" class="logo d-inline-block align-top" alt="Kitten">
                 Td5Ecu
             </b-navbar-brand>

@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { toast } from "vue3-toastify";
 
 export const useConnectionStore = defineStore({
   id: "connection",
@@ -9,20 +10,25 @@ export const useConnectionStore = defineStore({
     isConnected: (state) => state.connected,
   },
   actions: {
-    async startConnection() {
-      return fetch(`${import.meta.env.VITE_API_URL}/api/start`, { method: "POST" }).then(() => {
-        setTimeout(() => this.connected = true, 3000);
+    startConnection() {
+      fetch(`${import.meta.env.VITE_API_URL}/api/start`, {
+        method: "POST",
+      }).catch((err) => toast.error(err.message));
+    },
+    stopConnection() {
+      fetch(`${import.meta.env.VITE_API_URL}/api/stop`, {
+        method: "POST",
+      }).then(() => {
+        this.connected = false;
+        toast.error("You are now disconnected!");
       });
     },
-    async stopConnection() {
-      fetch(`${import.meta.env.VITE_API_URL}/api/stop`, { method: "POST" }).then(() => this.connected = false);
-    },
     setConnectionStatus(status) {
-      this.connected = status
-    }
+      this.connected = status;
+    },
   },
-  persist: {
-    storage: sessionStorage,
-    paths: ['connected'],
-  },
+  // persist: {
+  //   storage: sessionStorage,
+  //   paths: ["connected"],
+  // },
 });

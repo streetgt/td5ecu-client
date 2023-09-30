@@ -12,6 +12,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import VueSocketIO from 'vue-3-socket.io'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // Make BootstrapVue available throughout your project
@@ -28,6 +29,11 @@ import Vue3Toastify, {toast} from 'vue3-toastify';
 app.use(Vue3Toastify, {autoClose: 2000, position: toast.POSITION.BOTTOM_RIGHT});
 
 pinia.use(piniaPluginPersistedstate)
+
+app.use(new VueSocketIO({
+    debug: true,
+    connection: import.meta.env.VITE_API_URL
+}))
 
 app.use(router)
 

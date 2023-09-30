@@ -1,36 +1,34 @@
 <script>
+import { toast } from "vue3-toastify";
 import { useConnectionStore } from '../stores/connection'
-import { useFaultsStore } from '../stores/faults'
-import { toast } from 'vue3-toastify';
 
 export default {
     setup() {
         const connectionStore = useConnectionStore()
-        const faultsStore = useFaultsStore()
-        return { connectionStore, faultsStore }
+        return { connectionStore }
     },
-    data() {
-        return {
+    sockets: {
+        dashboard() {
+            this.connectionStore.setConnectionStatus(true);
+        },
+        fast_init() {
+            toast.success("You are now connected!");
+            this.connectionStore.setConnectionStatus(true);
+        },
+        error(data) {
+            toast.error(data);
+        },
+        disconnect() {
+            this.connectionStore.setConnectionStatus(false);
         }
     },
     methods: {
         startConnection() {
-            this.connectionStore.startConnection().then(() => {
-                toast.success("You are now connected!");
-            })
+            this.connectionStore.startConnection();
         },
         stopConnection() {
-            this.connectionStore.stopConnection().then(() => {
-                toast.error("You are now disconnected!");
-            })
+            this.connectionStore.stopConnection();
         },
-        getFaults() {
-            this.faultsStore.fetchFaults()
-        },
-        clearFaults() {
-            this.faultsStore.clearFaults()
-            toast.success("Fault(s) cleared!");
-        }
     },
     computed: {
         isConnected() {
@@ -42,17 +40,11 @@ export default {
 </script>
 
 <template>
-    <div class="d-flex justify-content-end mt-4">
+    <div class="d-flex justify-content-end mt-4 pr-3">
         <b-button-group size="md">
-            <b-button v-if="!isConnected" @click="startConnection()" variant="outline-primary"><b-icon
+            <b-button v-if="!isConnected" @click="startConnection()" variant="outline-dark"><b-icon
                     icon="lightning"></b-icon> Connect</b-button>
-            <b-button v-else @click="stopConnection()" variant="danger"><b-icon icon="x"></b-icon> Disconnect</b-button>
-            <b-button v-if="$route.name == 'connect'" @click="getFaults()" variant="outline-primary"><b-icon
-                    icon="clipboard-data"></b-icon> Get
-                Faults</b-button>
-            <b-button v-if="$route.name == 'connect'" @click="clearFaults()" variant="outline-primary"><b-icon
-                    icon="clipboard-x"></b-icon> Clear
-                Faults</b-button>
+            <b-button v-else @click="stopConnection()" variant="outline-danger"><b-icon icon="x"></b-icon> Disconnect</b-button>
         </b-button-group>
     </div>
 </template>

@@ -1,0 +1,22 @@
+{
+  "background_color": "#343a40",
+  "theme_color": "#343a40",
+  "name": "td5ecu",
+  "short_name": "Td5Ecu",
+  "description": "Td5Ecu - Dashboard",
+  "display": "standalone",
+  "start_url": "/",
+  "lang": "en-EN",
+  "icons": [
+    {
+      "src": "favicon-32x32.png",
+      "sizes": "32x23",
+      "type": "image/png"
+    },
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

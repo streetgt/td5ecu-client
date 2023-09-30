@@ -12,7 +12,7 @@ import Connect from './components/Connect.vue'
     <div class="container">
         <Connect />
         <RouterView />
-        <HealthCheck />
+        <!-- <HealthCheck /> -->
     </div>
 </template>
 

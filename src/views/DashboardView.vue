@@ -13,6 +13,12 @@ export default {
       payload: {}
     }
   },
+  sockets: {
+    dashboard(data) {
+      this.payload = data
+      console.log(data)
+    }
+  },
   methods: {
     getPayload() {
       if (!this.connectionStore.isConnected) {
@@ -24,10 +30,26 @@ export default {
         .then(data => this.payload = data)
     },
   },
+  computed: {
+    ectTemperature() {
+      const currentTemp = parseFloat(this.payload.temperatures?.coolant).toFixed(1) || NaN
+      if (isNaN(currentTemp)) {
+        return {
+          pill_color: 'light',
+          value: '-',
+        }
+      }
+
+      return {
+        pill_color: currentTemp > 90 ? 'danger' : 'light',
+        value: currentTemp,
+      }
+    }
+  },
   mounted() {
-    this.interval = setInterval(() => {
-      this.getPayload();
-    }, 500);
+    // this.interval = setInterval(() => {
+    //   this.getPayload();
+    // }, 500);
   },
   unmounted() {
     clearInterval(this.interval)
@@ -41,32 +63,32 @@ export default {
       <b-list-group class="col-sm-6">
         <b-list-group-item class="d-flex justify-content-between align-items-center">
           Current Speed
-          <b-badge variant="primary" pill>{{ payload.vehicle_speed }} km/h</b-badge>
+          <b-badge variant="light" pill>{{ payload.vehicle_speed }} km/h</b-badge>
         </b-list-group-item>
 
         <b-list-group-item class="d-flex justify-content-between align-items-center">
           Engine RPM
-          <b-badge variant="primary" pill>{{ payload.engine_rpm }} rpm</b-badge>
+          <b-badge variant="light" pill>{{ payload.engine_rpm }} rpm</b-badge>
         </b-list-group-item>
 
         <b-list-group-item class="d-flex justify-content-between align-items-center">
           Battery Voltage
-          <b-badge variant="primary" pill>{{ parseFloat(payload.battery_voltage).toFixed(1) }} volts</b-badge>
+          <b-badge variant="light" pill>{{ parseFloat(payload.battery_voltage).toFixed(1) }} volts</b-badge>
         </b-list-group-item>
 
         <b-list-group-item class="d-flex justify-content-between align-items-center">
           MAP
-          <b-badge variant="primary" pill>{{ parseFloat(payload.battery_voltage).toFixed(1) }} bar</b-badge>
+          <b-badge variant="light" pill>{{ parseFloat(payload.battery_voltage).toFixed(1) }} bar</b-badge>
         </b-list-group-item>
 
         <b-list-group-item class="d-flex justify-content-between align-items-center">
           ECT
-          <b-badge variant="primary" pill>{{ parseFloat(payload.temperatures?.coolant).toFixed(1) || '-' }} ºC</b-badge>
+          <b-badge :variant="ectTemperature.pill_color" pill>{{ ectTemperature.value }} ºC</b-badge>
         </b-list-group-item>
 
         <b-list-group-item class="d-flex justify-content-between align-items-center">
           Fuel consumption
-          <b-badge variant="primary" pill>{{ parseFloat(payload.current_fuel_consumption).toFixed(1) }}
+          <b-badge variant="light" pill>{{ parseFloat(payload.current_fuel_consumption).toFixed(1) }}
             L/100km</b-badge>
         </b-list-group-item>
 

@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import ConnectView from '../views/ConnectView.vue'
+import FaultsView from '../views/FaultsView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import InputsView from '../views/InputsView.vue'
 import IntakeView from '../views/IntakeView.vue'
@@ -12,11 +12,6 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            name: 'connect',
-            component: ConnectView,
-        },
-        {
-            path: '/dashboard',
             name: 'dashboard',
             component: DashboardView,
         },
@@ -39,7 +34,12 @@ const router = createRouter({
             path: '/engine',
             name: 'engine',
             component: EngineView,
-        }
+        },
+        {
+            path: '/faults',
+            name: 'faults',
+            component: FaultsView,
+        },
     ]           
 });
 
